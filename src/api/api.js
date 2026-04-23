@@ -71,4 +71,4 @@ export const deleteZone = async (zoneId) => {
     method: "DELETE",
   });
   return res.ok;
-};
+};``
