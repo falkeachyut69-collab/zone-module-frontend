@@ -83,6 +83,11 @@ function App() {
       return;
     }
 
+    console.log("Sending:", {
+      zoneName,
+      brandId: Number(zoneBrandId)
+    });
+
     try {
       const res = await fetch(`${BASE_URL}/zones`, {
         method: "POST",
@@ -91,13 +96,15 @@ function App() {
         },
         body: JSON.stringify({
           zoneName: zoneName,
-          brand: {
-            brandId: Number(zoneBrandId)
-          }
+          brandId: Number(zoneBrandId)   // ✅ FIXED HERE
         })
       });
 
-      if (!res.ok) throw new Error("Failed to add zone");
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Backend Error:", text);
+        throw new Error("Failed to add zone");
+      }
 
       alert("Zone added successfully");
 
